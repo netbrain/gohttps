@@ -8,6 +8,12 @@ import (
 
 func Http2HttpsRedirector(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		if r.RequestURI == "/_ping" {
+			w.Write([]byte("pong!"))
+			return
+		}
+
 		if strings.HasPrefix(r.Proto, "HTTP/") {
 			url := strings.Join([]string{
 				"https://",
