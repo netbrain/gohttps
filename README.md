@@ -1,4 +1,4 @@
-# gohttps
+# goredir
 
 A simple redirectore which currently supports the following features: 
 
