@@ -1,7 +1,7 @@
 
 FROM scratch
-ENTRYPOINT ["/gohttps"]
+ENTRYPOINT ["/goredir"]
 
 # Add the binary
-ADD gohttps /
+ADD goredir /
 EXPOSE 8080
