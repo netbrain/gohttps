@@ -7,8 +7,13 @@ import (
 	"strings"
 )
 
-func TestPong(t *testing.T) {
+func reset(){
+	http.DefaultServeMux = http.NewServeMux()
 	initHandlers()
+}
+
+func TestPong(t *testing.T) {
+	reset()
 	server := httptest.NewServer(http.DefaultServeMux)
 	defer server.Close()
 
@@ -28,8 +33,7 @@ func TestPong(t *testing.T) {
 }
 
 func TestHttpsRedirector(t *testing.T) {
-	redirectFlag = HTTP2HTTPS
-	initHandlers()
+	reset()
 	server := httptest.NewServer(http.DefaultServeMux)
 	defer server.Close()
 
