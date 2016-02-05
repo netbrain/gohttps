@@ -72,11 +72,13 @@ func HttpsRedirector(next http.Handler) http.Handler {
 
 func WildcardRedirector(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var scheme string
-		if strings.HasPrefix(r.Proto, "HTTP/") {
-			scheme = "http"
-		}else if strings.HasPrefix(r.Proto, "HTTPS/"){
-			scheme = "https"
+		scheme := r.Header.Get("X-Forwarded-Proto")
+		if scheme == "" {
+			if strings.HasPrefix(r.Proto, "HTTP/") {
+				scheme = "http"
+			}else if strings.HasPrefix(r.Proto, "HTTPS/"){
+				scheme = "https"
+			}
 		}
 		if strings.HasPrefix(r.Host, "www.") {
 			url := strings.Join([]string{
